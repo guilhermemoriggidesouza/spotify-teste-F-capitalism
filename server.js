@@ -21,7 +21,7 @@ app.get('/authorize', async(req, res)=>{
             form: {
                 grant_type:    'authorization_code',
                 code:          req.query.code,
-                redirect_uri:  'http://localhost:3333/home',
+                redirect_uri:  'http://localhost:5000/authorize',
             },
             headers:{
                 'Authorization': 'Basic '+Buffer(process.env.SPOTIFY_CLIENT_ID + ":" + process.env.SPOTIFY_SECRET).toString('base64')
@@ -30,10 +30,11 @@ app.get('/authorize', async(req, res)=>{
         }
         
         request.post(authOptions, (error, response, body)=>{
+            console.log(body)
             if (!error && response.statusCode === 200) {
                 res.json(body)
             }else{
-                res.json({err : error})
+                res.json({err : body})
             }
         })
     }catch(err){

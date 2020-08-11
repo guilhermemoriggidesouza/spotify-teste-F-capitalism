@@ -1,26 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import querystring from 'querystring'
+import React, { useState, useEffect, useContext } from 'react';
+import { loginSpotify } from '../services/spotifyService'
+import { connectionsContext } from '../context';
 
 const Login = ()=>{
-  const [helloWorld, setHello] = useState({});
+  const [connection, setConnection] = useContext(connectionsContext)
 
-  const logarSpotify = () =>{
-    window.location.href = 'https://accounts.spotify.com/authorize?'+
-    querystring.stringify({
-        response_type: 'code',
-        client_id:'5b9475166c654131bb402fb4a6e463aa',
-        scope: 'user-read-private user-read-email', 
-        redirect_uri: 'http://localhost:3000/home'
-    })
-  }
-
-  useEffect(() => {
-  });
+  useEffect(()=>{
+    console.log('VAIII')
+  }, [])
 
   return (
     <div>
-      <p>login</p>
-      <button onClick={logarSpotify}>Logar na sua conta spotify</button>
+      <p>login {connection.access_token}</p>
+      <button onClick={()=> loginSpotify('886197e15b45429eafa71a03f7bc155e', 'http://localhost:3000/home')}> Logar na sua conta spotify </button>
     </div>
   );
 }

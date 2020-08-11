@@ -1,16 +1,21 @@
-import React from 'react';
+import React, {useState} from 'react';
 import ReactDOM from 'react-dom';
-import Login from './components/Login';
-import Home from './components/Home';
 import * as serviceWorker from './serviceWorker';
-import routes from "./Routes";
-import {useRoutes} from 'hookrouter';
+import { BrowserRouter as Router } from "react-router-dom";
+import  AllRoutes from './Routes';
+import { connectionsContext } from './context';
 
 function App() {
-  const routeResult = useRoutes(routes);
-  return routeResult;
-}
+  const [connection, setConnection] = useState(localStorage);
 
+  return (
+    <Router>
+      <connectionsContext.Provider value = {[ connection, setConnection ]}>
+        <AllRoutes />
+      </connectionsContext.Provider>
+    </Router>
+  );
+}
 ReactDOM.render(
   <App />,
   document.getElementById('root')
